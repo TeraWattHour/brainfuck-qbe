@@ -19,15 +19,15 @@ impl<'a, 'b> Generator<'a, 'b> {
     const PREAMBLE: &'static [u8] = br#"
 export function w $main() {
 @start
-    %addr =l call $mmap(l 0, w 10485760, w 3, w 4098, w -1, w 0)
-
-    %ip =l copy %addr
+    %ip =l copy $data
     %val =w copy 0
 "#;
 
     const EPILOGUE: &'static [u8] = br#"
     ret 0
 }
+
+data $data = { z 10000000 }
 "#;
 
     pub fn generate(&mut self) -> Result<(), Box<dyn Error>> {
